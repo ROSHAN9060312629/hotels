@@ -2,7 +2,9 @@ const express=require('express')
 const router=express.Router();
 const app=express();
 const mongoose = require('mongoose');
-const mongoUrl='mongodb://localhost:27017/hotel';
+require('dotenv').config()
+//const mongoUrl=process.env.LOCAL_URL;
+const mongoUrl=process.env.DB_URL
 mongoose.connect(mongoUrl)
 const db=mongoose.connection;
 db.on('connected',()=>{
@@ -127,8 +129,9 @@ router.delete('/:id',async(req,res)=>{
         res.status(500).json({error:"Internal Server Error"})
     }
 })
+const PORT=process.env.PORT || 3000
 app.use('/person',router)
-app.listen('3000',()=>{
+app.listen(PORT,()=>{
     console.log("server is listening....")
 })
 //github
